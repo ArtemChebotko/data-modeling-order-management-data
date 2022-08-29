@@ -20,16 +20,17 @@
 
 <div class="step-title">Design query Q1</div>
 
-✅ Find information about all networks; order by name (asc):
-
+✅ Find all orders placed by user `joe` between dates `2020-01-01` and `2020-12-31`, inclusive; sort by order timestamp (desc):
+ 
 <details>
   <summary>Solution</summary>
 
 ```
-SELECT name, description,
-       region, num_sensors
-FROM networks
-WHERE bucket = 'all';
+SELECT * 
+FROM orders_by_user 
+WHERE user_id = 'joe'
+  AND order_timestamp >= '2020-01-01'
+  AND order_timestamp <  '2021-01-01';
 ```
 
 </details>

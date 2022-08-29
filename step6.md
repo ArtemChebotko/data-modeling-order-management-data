@@ -20,15 +20,16 @@
 
 <div class="step-title">Design query Q3</div>
 
-✅ Find information about all sensors in network `forest-net`:
+✅ Find all orders that contain item `n-0023` and are placed by user `joe`; sort by order timestamp (desc):
 
 <details>
   <summary>Solution</summary>
 
 ```
 SELECT * 
-FROM sensors_by_network
-WHERE network = 'forest-net';
+FROM orders_by_user_item
+WHERE item_id = 'n-0023'
+  AND user_id = 'joe';  
 ```
 
 </details>

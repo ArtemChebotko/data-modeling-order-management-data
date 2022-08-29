@@ -20,16 +20,15 @@
 
 <div class="step-title">Design query Q4</div>
 
-✅ Find raw measurements for sensor `s1003` on `2020-07-06`; order by timestamp (desc):
+✅ Find a status history for order `111-0461064-1669732`; sort by status timestamp (desc):
 
 <details>
   <summary>Solution</summary>
 
 ```
-SELECT timestamp, value 
-FROM temperatures_by_sensor
-WHERE sensor = 's1003'
-  AND date   = '2020-07-06';
+SELECT * 
+FROM order_status_history_by_id
+WHERE order_id = '111-0461064-1669732'; 
 ```
 
 </details>

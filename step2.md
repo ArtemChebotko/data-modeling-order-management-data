@@ -20,54 +20,64 @@
 
 <div class="step-title">Create tables</div>
 
-✅ Create table `networks`:
+✅ Create table `orders_by_user`:
 ```
-CREATE TABLE IF NOT EXISTS networks (
-  bucket TEXT,
-  name TEXT,
-  description TEXT,
-  region TEXT,
-  num_sensors INT,
-  PRIMARY KEY ((bucket),name)
+CREATE TABLE orders_by_user (
+  user_id TEXT,
+  order_timestamp TIMESTAMP,
+  order_id TEXT,
+  order_status TEXT,
+  order_total DECIMAL,
+  PRIMARY KEY ((user_id),order_timestamp,order_id)
+) WITH CLUSTERING ORDER BY (order_timestamp DESC, order_id ASC);
+```
+
+✅ Create table `orders_by_id`:
+```
+CREATE TABLE orders_by_id (
+  order_id TEXT,
+  item_name TEXT,
+  item_id TEXT,
+  item_description TEXT,
+  item_price DECIMAL,
+  item_quantity INT,
+  order_status TEXT STATIC,
+  order_timestamp TIMESTAMP STATIC,
+  order_subtotal DECIMAL STATIC,
+  order_shipping DECIMAL STATIC,
+  order_tax DECIMAL STATIC,
+  order_total DECIMAL STATIC,
+  payment_summary TEXT STATIC,
+  payment_details MAP<TEXT,TEXT> STATIC,
+  billing_summary TEXT STATIC,
+  billing_details MAP<TEXT,TEXT> STATIC,
+  shipping_summary TEXT STATIC,
+  shipping_details MAP<TEXT,TEXT> STATIC,
+  delivery_id TEXT STATIC,
+  delivery_details MAP<TEXT,TEXT> STATIC,
+  PRIMARY KEY ((order_id),item_name,item_id)
 );
 ```
 
-✅ Create table `temperatures_by_network`:
+✅ Create table `orders_by_user_item`:
 ```
-CREATE TABLE IF NOT EXISTS temperatures_by_network (
-  network TEXT,
-  week DATE,
-  date_hour TIMESTAMP,
-  sensor TEXT,
-  avg_temperature FLOAT,
-  latitude DECIMAL,
-  longitude DECIMAL,
-  PRIMARY KEY ((network,week),date_hour,sensor)
-) WITH CLUSTERING ORDER BY (date_hour DESC, sensor ASC);
+CREATE TABLE orders_by_user_item (
+  user_id TEXT,
+  item_id TEXT,
+  order_timestamp TIMESTAMP,
+  order_id TEXT,
+  PRIMARY KEY ((user_id,item_id),order_timestamp,order_id)
+) WITH CLUSTERING ORDER BY (order_timestamp DESC, order_id ASC);
 ```
 
-✅ Create table `sensors_by_network`:
+✅ Create table `order_status_history_by_id`:
 ```
-CREATE TABLE IF NOT EXISTS sensors_by_network (
-  network TEXT,
-  sensor TEXT,
-  latitude DECIMAL,
-  longitude DECIMAL,
-  characteristics MAP<TEXT,TEXT>,
-  PRIMARY KEY ((network),sensor)
-);
-```
-
-
-✅ Create table `temperatures_by_sensor`:
-```
-CREATE TABLE IF NOT EXISTS temperatures_by_sensor (
-  sensor TEXT,
-  date DATE,
-  timestamp TIMESTAMP,
-  value FLOAT,
-  PRIMARY KEY ((sensor,date),timestamp)
-) WITH CLUSTERING ORDER BY (timestamp DESC);
+CREATE TABLE order_status_history_by_id (
+  order_id TEXT,
+  status_timestamp TIMESTAMP,
+  order_status TEXT,
+  PRIMARY KEY ((order_id),status_timestamp)
+) WITH CLUSTERING ORDER BY (status_timestamp DESC);
 ```
 
 ✅ Verify that the four tables have been created:
