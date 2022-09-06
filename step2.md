@@ -22,7 +22,7 @@
 
 ✅ Create table `orders_by_user`:
 ```
-CREATE TABLE orders_by_user (
+CREATE TABLE IF NOT EXISTS orders_by_user (
   user_id TEXT,
   order_timestamp TIMESTAMP,
   order_id TEXT,
@@ -34,7 +34,7 @@ CREATE TABLE orders_by_user (
 
 ✅ Create table `orders_by_id`:
 ```
-CREATE TABLE orders_by_id (
+CREATE TABLE IF NOT EXISTS orders_by_id (
   order_id TEXT,
   item_name TEXT,
   item_id TEXT,
@@ -61,7 +61,7 @@ CREATE TABLE orders_by_id (
 
 ✅ Create table `orders_by_user_item`:
 ```
-CREATE TABLE orders_by_user_item (
+CREATE TABLE IF NOT EXISTS orders_by_user_item (
   user_id TEXT,
   item_id TEXT,
   order_timestamp TIMESTAMP,
@@ -72,7 +72,7 @@ CREATE TABLE orders_by_user_item (
 
 ✅ Create table `order_status_history_by_id`:
 ```
-CREATE TABLE order_status_history_by_id (
+CREATE TABLE IF NOT EXISTS order_status_history_by_id (
   order_id TEXT,
   status_timestamp TIMESTAMP,
   order_status TEXT,
